@@ -1,9 +1,9 @@
 {
-  "name": "@nextjournal/clojure-mode",
+  "name": "@xtalk/clojure-mode",
   "files": [
     "dist"
   ],
-  "version": "0.3.3",
+  "version": "0.3.5",
   "license": "EPL-2.0",
   "repository": {
     "type": "git",
@@ -36,11 +36,10 @@
     "test": "shadow-cljs -A:dev release ci-test && node out/node-tests.js",
     "watch2": "git ls-files | entr yarn test",
     "vite:dev": "vite --open -l info --config vite.config.js public/squint",
-    "vite:build": "yarn vite build --config vite.config.js public/squint"
+    "vite:build": "yarn vite build --config vite.config.js"
   },
   "devDependencies": {
     "@codemirror/lang-javascript": "^6.0.0",
-    "@nextjournal/clojure-mode": "link:.",
     "@squint-cljs/macros": "0.1.0",
     "d3-require": "^1.2.4",
     "emoji-regex": "^10.0.0",
@@ -62,5 +61,8 @@
     ".": "./dist/nextjournal/clojure_mode.mjs",
     "./extensions/eval-region": "./dist/nextjournal/clojure_mode/extensions/eval_region.mjs",
     "./extensions/formatting": "./dist/nextjournal/clojure_mode/extensions/formatting.mjs"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

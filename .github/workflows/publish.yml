@@ -1,0 +1,44 @@
+name: Publish UMD to npm
+
+on:
+  push:
+    branches:
+      - main
+  release:
+    types: [published]
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18' # Use a suitable Node.js version
+
+    - name: Setup Babashka
+      uses: babashka/setup-clojure@v2
+      with:
+        bb-version: latest
+
+    - name: Install dependencies
+      run: yarn install --immutable
+
+    - name: Run Squint build
+      run: bb squint:build
+
+    - name: Run Vite build (UMD)
+      run: yarn vite build
+
+    - name: Run tests
+      run: yarn test
+
+    - name: Publish to npm
+      if: github.event_name == 'release' && github.event.action == 'published'
+      run: npm publish --access public
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
